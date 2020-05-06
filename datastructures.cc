@@ -655,11 +655,6 @@ std::vector<std::tuple<StopID, RouteID, Time> > Datastructures::journey_earliest
     return result;
 }
 
-void Datastructures::add_walking_connections()
-{
-    // Replace this comment and the line below with your implementation
-}
-
 
 // helper functions
 std::vector<std::shared_ptr<Datastructures::Region>> Datastructures::descendants(const std::shared_ptr<Region> region) {

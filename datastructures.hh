@@ -102,106 +102,116 @@ public:
     Datastructures();
     ~Datastructures();
 
-    // Estimate of performance:
-    // Short rationale for estimate:
+    // Estimate of performance: O(1)
+    // Short rationale for estimate: for unordered_map, the function .size() takes constant time.
     int stop_count();
 
-    // Estimate of performance:
-    // Short rationale for estimate:
+    // Estimate of performance: O(1)
+    // Short rationale for estimate: Clear operation used is linear on size (destructors) for
+    // vectors and unorederd map according to cpp references.
     void clear_all();
 
-    // Estimate of performance:
-    // Short rationale for estimate:
+    // Estimate of performance: Theta(n), O(n^2)
+    // Short rationale for estimate: Accessing keys from unordered_map takes constant time, so obtaining elements
+    // from the unordered_map takes linear time. However, worst case rarely happens if the hash function is good.
     std::vector<StopID> all_stops();
 
-    // Estimate of performance:
-    // Short rationale for estimate:
+    // Estimate of performance: Theta(1), O(n)
+    // Short rationale for estimate: In average, adding elements in unordered_map takes constant time,
+    // but when hash function produces collisions for every insertion in the map(if the hash function is not good) it might cause
+    // linear time in the worst case.
     bool add_stop(StopID id, Name const& name, Coord xy);
 
-    // Estimate of performance:
-    // Short rationale for estimate:
+    // Estimate of performance: Theta(1), O(n)
+    // Short rationale for estimate: In average, finding elements in unordered_map takes constant time.
+    // But rarely, in worst case, time complexity might be linear.
     Name get_stop_name(StopID id);
 
-    // Estimate of performance:
-    // Short rationale for estimate:
+    // Estimate of performance: Theta(1), O(n)
+    // Short rationale for estimate: In average, finding elements in unordered_map takes constant time.
+    // But rarely, in worst case, time complexity might be linear.
     Coord get_stop_coord(StopID id);
 
-    // We recommend you implement the operations below only after implementing the ones above
-
-    // Estimate of performance:
-    // Short rationale for estimate:
+    // Estimate of performance: O(nlogn)
+    // Short rationale for estimate: std::sort takes O(nlogn).
     std::vector<StopID> stops_alphabetically();
 
-    // Estimate of performance:
-    // Short rationale for estimate:
+    // Estimate of performance: O(nlogn)
+    // Short rationale for estimate: std::sort takes O(nlogn)
     std::vector<StopID> stops_coord_order();
 
-    // Estimate of performance:
-    // Short rationale for estimate:
+    // Estimate of performance: O(n)
+    // Short rationale for estimate: In my program, I am using unordered_map as a main data structure and when sorting, keys are copied
+    // and sorted, so there is no way to keep track if the data structure is sorted or not. So for getting minimum and maximum, all elements
+    // should be touched once (linear).
     StopID min_coord();
 
-    // Estimate of performance:
-    // Short rationale for estimate:
+    // Estimate of performance: O(n)
+    // Short rationale for estimate: To get a maximum value, all elements should be checked once (linear).
     StopID max_coord();
 
-    // Estimate of performance:
-    // Short rationale for estimate:
+    // Estimate of performance: O(n)
+    // Short rationale for estimate: Searching elements in unordered_map by key has constant time in average, and has linear time in
+    // container size in worst case. However, worst case rarely happens if the hash function is good.
     std::vector<StopID> find_stops(Name const& name);
 
-    // Estimate of performance:
-    // Short rationale for estimate:
+    // Estimate of performance: Theta(1), O(n)
+    // Short rationale for estimate: Searching elements in unordered_map by key has constant time in average, and has linear time in
+    // container size in worst case. However, worst case rarely happens if the hash function is good.
     bool change_stop_name(StopID id, Name const& newname);
 
-    // Estimate of performance:
-    // Short rationale for estimate:
+    // Estimate of performance: Theta(1), O(n)
+    // Short rationale for estimate: Searching elements in unordered_map by key has constant time in average, and has linear in
+    // container size in worst case.
     bool change_stop_coord(StopID id, Coord newcoord);
 
-    // We recommend you implement the operations below only after implementing the ones above
-
-    // Estimate of performance:
-    // Short rationale for estimate:
+    // Estimate of performance: Theta(1), O(n)
+    // Short rationale for estimate: Searching elements in unordered_map by key has constant time in average, and has linear in
+    // container size in worst case.
     bool add_region(RegionID id, Name const& name);
 
-    // Estimate of performance:
-    // Short rationale for estimate:
+    // Estimate of performance: Theta(1), O(n)
+    // Short rationale for estimate: Searching elements in unordered_map by key has constant time in average, and has linear in
+    // container size in worst case.
     Name get_region_name(RegionID id);
 
-    // Estimate of performance:
-    // Short rationale for estimate:
+    // Estimate of performance: O(n)
+    // Short rationale for estimate: Going through all elements and pushing back to the new vector takes linear time.
     std::vector<RegionID> all_regions();
 
-    // Estimate of performance:
-    // Short rationale for estimate:
+    // Estimate of performance: Theta(1), O(n)
+    // Short rationale for estimate: Finding element in unordered_map by key takes contant time in avearge, and has linear in
+    // container size in worst case. So for both stops_map and regions_map, it takes constant time
     bool add_stop_to_region(StopID id, RegionID parentid);
 
-    // Estimate of performance:
-    // Short rationale for estimate:
+    // Estimate of performance: Theta(1), O(n)
+    // Short rationale for estimate: Finding element in unordered_map by key takes contant time in avearge, and has linear in
+    // container size in worst case. So for both stops_map and regions_map, it takes constant time
     bool add_subregion_to_region(RegionID id, RegionID parentid);
 
-    // Estimate of performance:
-    // Short rationale for estimate:
+    // Estimate of performance: Theta(1), O(n)
+    // Short rationale for estimate: Finding element in unordered_map by key takes contant time in avearge, and has linear in
+    // container size in worst case. But the worst case rarely happens if the hash function is good.
     std::vector<RegionID> stop_regions(StopID id);
 
-    // Non-compulsory operations
-
-    // Estimate of performance:
-    // Short rationale for estimate:
-    void creation_finished();
-
-    // Estimate of performance:
-    // Short rationale for estimate:
+    // Estimate of performance: O(n)
+    // Short rationale for estimate: Both for loop through the unordered_map and std::min_element and std::max_element takes linear time.
     std::pair<Coord, Coord> region_bounding_box(RegionID id);
 
-    // Estimate of performance:
-    // Short rationale for estimate:
+    // Estimate of performance: O(nlogm) where m = (middle - first of the array length),
+    // Short rationale for estimate: std::partial_sort is gives slightly better performance compared to the entire sort. In our case, since
+    // only need to return the closest 5 stops, partial sort was used.
     std::vector<StopID> stops_closest_to(StopID id);
 
-    // Estimate of performance:
-    // Short rationale for estimate:
+    // Estimate of performance: Theta(1), O(n)
+    // Short rationale for estimate: Finding an element by key in unordered_map takes constant time in average, and has linear in
+    // container size in worst case. However, worst case rarely happens if the hash function is good.
     bool remove_stop(StopID id);
 
-    // Estimate of performance:
-    // Short rationale for estimate:
+    // Estimate of performance: O(n)
+    // Short rationale for estimate: searching element in unordered_set takes constant time in average, and has linear in container size
+    // in worst case. Also, looping through the keys in unordered_map takes linear time. I copied vector into unordered_set in order to
+    // find the common elements more quickly.
     RegionID stops_common_region(StopID id1, StopID id2);
 
     // Phase 2 operations
@@ -210,8 +220,9 @@ public:
     // Short rationale for estimate: Every key in unordered_map should be gone through to return the keys of the unordered_map.
     std::vector<RouteID> all_routes();
 
-    // Estimate of performance:
-    // Short rationale for estimate:
+    // Estimate of performance: Theta(1), O(n)
+    // Short rationale for estimate: Finding element in unordered_map by key takes contant time in avearge, and has linear in
+    // container size in worst case. But the worst case rarely happens if the hash function is good.
     bool add_route(RouteID id, std::vector<StopID>& stops);
 
     // Estimate of performance: Theta(1), O(n)
@@ -232,8 +243,6 @@ public:
     // Estimate of performance: O(V+E) where V is the number of vertices and E is the number of edges.
     // The Djikstra algorithm was used with adjacency List and Priority queue where v is the total number of vertices and E is total number of edges
     std::vector<std::tuple<StopID, RouteID, Distance>> journey_any(StopID fromstop, StopID tostop);
-
-//  // Non-compulsory operations
 
     // Estimate of performance: O(V+E) where V is the number of vertices and E is the number of edges.
     // Short rationale for estimate: The Breadth-first search algorithm was implemented using
@@ -264,10 +273,6 @@ public:
     // Short rationale for estimate: The Djikstra algorithm was used with adjacency List and Priority queue where v is the total number of vertices
     // and E is total number of edges
     std::vector<std::tuple<StopID, RouteID, Time>> journey_earliest_arrival(StopID fromstop, StopID tostop, Time starttime);
-
-    // Estimate of performance:
-    // Short rationale for estimate:
-    void add_walking_connections(); // Note! This method is completely optional, and not part of any testing
 
 private:
     // Add stuff needed for your class implementation here
